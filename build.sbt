@@ -7,26 +7,24 @@ lazy val root = project.in(file("."))
 val moduleAApi =
   project
     .in(file("module-a-api"))
-    .enablePlugins(Fs2Grpc)
-    .settings(
-      libraryDependencies ++= Seq(
-        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0" % "protobuf",
-        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0"
-      ),
-      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
-      // Generate scala classes for all protos under "google/type"
-      PB.protoSources in Compile += PB.externalIncludePath.value / "google" / "type",
-    )
+
 
 lazy val moduleB =
   project
     .in(file("module-b"))
     .settings(
       libraryDependencies ++= List(
-        "io.grpc" % "grpc-netty" % "1.11.0"
-      )
+        "io.grpc" % "grpc-netty" % "1.11.0",
+        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0" % "protobuf",
+        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0"
+      ),
+      (PB.protoSources in Compile) += (baseDirectory in moduleAApi).value / "src" / "main" / "protobuf",
+      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
+      // Generate scala classes for all protos under "google/type"
+      PB.protoSources in Compile += PB.externalIncludePath.value / "google" / "type",
     )
     .dependsOn(moduleAApi)
+    .enablePlugins(Fs2Grpc)
 
 lazy val moduleA =
   project
@@ -34,7 +32,15 @@ lazy val moduleA =
     .settings(
       libraryDependencies ++= List(
         "io.grpc" % "grpc-netty" % "1.11.0",
-        "io.grpc" % "grpc-services" % "1.11.0"
-      )
+        "io.grpc" % "grpc-services" % "1.11.0",
+        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0" % "protobuf",
+        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0"
+      ),
+      (PB.protoSources in Compile) += (baseDirectory in moduleAApi).value / "src" / "main" / "protobuf",
+      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
+      // Generate scala classes for all protos under "google/type"
+      PB.protoSources in Compile += PB.externalIncludePath.value / "google" / "type",
     )
     .dependsOn(moduleAApi)
+    .enablePlugins(Fs2Grpc)
+

@@ -2,7 +2,6 @@ import cats.effect.{ExitCode, IO, IOApp}
 import com.example.protos.hello._
 import fs2._
 import io.grpc._
-import io.grpc.protobuf.services.ProtoReflectionService
 import org.lyranthe.fs2_grpc.java_runtime.implicits._
 
 import scala.concurrent.ExecutionContext.Implicits.global

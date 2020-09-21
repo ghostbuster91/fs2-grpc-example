@@ -1,6 +1,8 @@
 syntax = "proto3";
 
 package com.example.protos;
+import "google/protobuf/wrappers.proto";
+import "money.proto";
 
 // The greeting service definition.
 service Greeter {
@@ -18,5 +20,7 @@ message HelloRequest {
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
+  google.protobuf.StringValue wrappedValue = 2;
+  google.type.Money money = 3;
 }
 

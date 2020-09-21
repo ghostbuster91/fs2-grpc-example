@@ -1,5 +1,5 @@
 import cats.effect.{ExitCode, IO, IOApp}
-import com.example.protos.hello._
+import com.example.protos._
 import fs2._
 import io.grpc._
 import org.lyranthe.fs2_grpc.java_runtime.implicits._

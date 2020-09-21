@@ -8,6 +8,15 @@ val moduleAApi =
   project
     .in(file("module-a-api"))
     .enablePlugins(Fs2Grpc)
+    .settings(
+      libraryDependencies ++= Seq(
+        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0" % "protobuf",
+        "com.thesamet.scalapb.common-protos" %% "proto-google-common-protos-scalapb_0.10" % "1.18.0-0"
+      ),
+      scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage,
+      // Generate scala classes for all protos under "google/type"
+      PB.protoSources in Compile += PB.externalIncludePath.value / "google" / "type",
+    )
 
 lazy val moduleB =
   project
